@@ -1,6 +1,0 @@
-[submodule "wicherdb-fakeclient"]
-	path = wicherdb-fakeclient
-	url = https://github.com/majudev/wicherdb-fakeclient.git
-[submodule "WicherDB_Server"]
-	path = WicherDB_Server
-	url = https://github.com/majudev/wicherdb-localserver.git
