@@ -1,7 +1,10 @@
 #include "main.h"
+#include "updater.h"
 
 #ifdef WIN
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow ) {
+	HWND hWnd = GetConsoleWindow();
+	ShowWindow( hWnd, SW_SHOW );
 	std::vector<std::string> args = get_args(lpCmdLine);
 #elif defined(UNI)
 int main(int argc, char * argv[]){
@@ -13,7 +16,7 @@ int main(int argc, char * argv[]){
 	while(x != args.size()){
 		if(args[x] == std::string("-silent")){
 			silent = true;
-		}else if(args[x] == std::string("-fakerun")){
+		}else if(args[x] == std::string("-update")){
 			fakerun = true;
 		}
 		++x;
@@ -28,6 +31,14 @@ int main(int argc, char * argv[]){
 		return -1;
 	}
 
+#ifdef WIN
+	ShowWindow( hWnd, SW_SHOW );
+#endif
+	update();
+#ifdef WIN
+	ShowWindow( hWnd, SW_HIDE );
+#endif
+	
 	if(!fakerun){
 		if(silent){
 			std::cout << "Performing silent run (errors only)..." << std::endl;
@@ -49,7 +60,7 @@ int main(int argc, char * argv[]){
 		}
 		pclose(f);
 	}else{
-		std::cout << "Wicher started with -fakerun arg. Quitting..." << std::endl;
+		std::cout << "Update only. Quitting..." << std::endl;
 	}
 	return 0;
 }
