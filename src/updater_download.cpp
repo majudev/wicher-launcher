@@ -11,7 +11,11 @@ static int copy_data(struct archive *ar, struct archive *aw){
 	int r;
 	const void *buff;
 	size_t size;
+#ifdef WIN
+	la_int64_t offset;
+#else
 	off_t offset;
+#endif
 
 	for (;;) {
 		r = archive_read_data_block(ar, &buff, &size, &offset);
@@ -41,7 +45,8 @@ static bool extract(char * buffer, size_t length){
 	flags |= ARCHIVE_EXTRACT_FFLAGS;
 
 	a = archive_read_new();
-	archive_read_support_format_all(a);
+	//archive_read_support_format_all(a);
+	archive_read_support_format_tar(a);
 	archive_read_support_filter_all(a);
 	ext = archive_write_disk_new();
 	archive_write_disk_set_options(ext, flags);
