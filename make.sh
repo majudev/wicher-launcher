@@ -2,7 +2,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
 FLAGS="$FLAGS -O3 -Wall -Iinclude `pkg-config --cflags jansson libarchive` `curl-config --cflags`"
-LIBS="$LIBS -static `pkg-config --libs jansson libarchive bzip2 liblzma` -liconv -llzo2 `curl-config --static-libs`"
+LIBS="$LIBS -static `pkg-config --libs jansson libarchive bzip2 liblzma` -liconv `curl-config --static-libs`"
 g++ $FLAGS \
 	src/main.cpp\
 	src/args.cpp\
